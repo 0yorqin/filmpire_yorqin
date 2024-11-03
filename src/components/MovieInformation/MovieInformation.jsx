@@ -59,7 +59,7 @@ const MovieInformation = () => {
 
   return (
     <Grid2 container className={classes.containerSpaceAround}>
-      <Grid2 item sm={12} lg={4}>
+      <Grid2 item size={{ sm: 12, lg: 4 }}>
         <img
           className={classes.poster}
           src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
@@ -67,7 +67,7 @@ const MovieInformation = () => {
         />
       </Grid2>
 
-      <Grid2 item container direction="column" lg={7}>
+      <Grid2 item container direction="column" size={{ sm: 12, lg: 7 }}>
         <Typography variant="h3" align="center" gutterBottom>
           {data?.title} ({data.release_date.split('-')[0]})
         </Typography>
@@ -156,7 +156,7 @@ const MovieInformation = () => {
         <Grid2 item container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
             <Grid2 item xs={12} sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="small" variant="outlined">
+              <ButtonGroup size="medium" variant="outlined">
                 <Button
                   target="_blank"
                   rel="noopener noreferrer"
