@@ -59,6 +59,7 @@ const MovieInformation = () => {
 
   return (
     <Grid2 container className={classes.containerSpaceAround}>
+      {/* poster */}
       <Grid2 item size={{ sm: 12, lg: 4 }}>
         <img
           className={classes.poster}
@@ -68,6 +69,7 @@ const MovieInformation = () => {
       </Grid2>
 
       <Grid2 item container direction="column" size={{ sm: 12, lg: 7 }}>
+        {/* title */}
         <Typography variant="h3" align="center" gutterBottom>
           {data?.title} ({data.release_date.split('-')[0]})
         </Typography>
@@ -93,6 +95,7 @@ const MovieInformation = () => {
           </Typography>
         </Grid2>
 
+        {/* genres & overview */}
         <Grid2 item className={classes.genresContainer}>
           {data?.genres?.map((genre) => (
             <Link
@@ -121,6 +124,7 @@ const MovieInformation = () => {
           {data?.overview}
         </Typography>
 
+        {/* cast */}
         <Typography variant="h5" gutterBottom style={{ marginBottom: '15px' }}>
           Top Cast
         </Typography>
@@ -153,6 +157,8 @@ const MovieInformation = () => {
                 )
             )}
         </Grid2>
+
+        {/* buttons */}
         <Grid2 item container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
             <Grid2 item xs={12} sm={6} className={classes.buttonsContainer}>
