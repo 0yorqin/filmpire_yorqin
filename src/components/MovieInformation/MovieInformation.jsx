@@ -23,7 +23,11 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useGetMovieQuery } from '../../services/TMDB';
+import {
+  useGetMovieQuery,
+  useGetRecommendationsQuery,
+} from '../../services/TMDB';
+import { MovieList } from '..';
 import useStyles from './styles';
 import genreIcons from '../../assets/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
@@ -35,9 +39,16 @@ const MovieInformation = () => {
   const dispatch = useDispatch();
   const isMovieFavorited = true;
   const isMovieWatchlisted = true;
+  const { data: recommendations, isFetching: isRecommendationsFetching } =
+    useGetRecommendationsQuery({
+      list: '/recommendations',
+      movie_id: id,
+    });
 
   const addToFavourites = () => {};
   const addToWatchList = () => {};
+
+  console.log(recommendations);
 
   if (isFetching) {
     return (
@@ -218,6 +229,18 @@ const MovieInformation = () => {
           </div>
         </Grid2>
       </Grid2>
+
+      {/* recommended movies */}
+      <Box marginTop="5rem" width="100%">
+        <Typography variant="h3" gutterBottom align="center">
+          You might also like
+        </Typography>
+        {recommendations ? (
+          <MovieList movies={recommendations} numberOfMovies={12} />
+        ) : (
+          <Box>There are no recommendations</Box>
+        )}
+      </Box>
     </Grid2>
   );
 };
