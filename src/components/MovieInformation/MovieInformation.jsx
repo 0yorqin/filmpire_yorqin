@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   Typography,
@@ -44,15 +44,14 @@ const MovieInformation = () => {
       list: '/recommendations',
       movie_id: id,
     });
+  const [open, setOpen] = useState(false);
 
   const addToFavourites = () => {};
   const addToWatchList = () => {};
 
-  console.log(recommendations);
-
   if (isFetching) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box display="flex" justifyContent="center" alignitem="true" s="center">
         <CircularProgress size="8rem" />
       </Box>
     );
@@ -60,7 +59,7 @@ const MovieInformation = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box display="flex" justifyContent="center" alignitem="true" s="center">
         <Typography variant="h6" align="center">
           Something went wrong... <Link to="/">Go back</Link>
         </Typography>
@@ -71,15 +70,14 @@ const MovieInformation = () => {
   return (
     <Grid2 container className={classes.containerSpaceAround}>
       {/* poster */}
-      <Grid2 item size={{ sm: 12, lg: 4 }}>
+      <Grid2 item="true" size={{ sm: 12, lg: 4 }}>
         <img
           className={classes.poster}
           src={`https://image.tmdb.org/t/p/w500/${data?.poster_path}`}
           alt={data?.title}
         />
       </Grid2>
-
-      <Grid2 item container direction="column" size={{ sm: 12, lg: 7 }}>
+      <Grid2 item="true" container direction="column" size={{ sm: 12, lg: 7 }}>
         {/* title */}
         <Typography variant="h3" align="center" gutterBottom>
           {data?.title} ({data.release_date.split('-')[0]})
@@ -87,7 +85,7 @@ const MovieInformation = () => {
         <Typography variant="h5" align="center" gutterBottom>
           {data?.tagline}
         </Typography>
-        <Grid2 item className={classes.containerSpaceAround}>
+        <Grid2 item="true" className={classes.containerSpaceAround}>
           <Box display="flex" align="center">
             <Rating readOnly value={data.vote_average / 2} precision={0.1} />
             <Typography
@@ -107,7 +105,7 @@ const MovieInformation = () => {
         </Grid2>
 
         {/* genres & overview */}
-        <Grid2 item className={classes.genresContainer}>
+        <Grid2 item="true" className={classes.genresContainer}>
           {data?.genres?.map((genre) => (
             <Link
               className={classes.links}
@@ -139,14 +137,14 @@ const MovieInformation = () => {
         <Typography variant="h5" gutterBottom style={{ marginBottom: '15px' }}>
           Top Cast
         </Typography>
-        <Grid2 item container spacing={2}>
+        <Grid2 item="true" container spacing={2}>
           {data &&
             data?.credits?.cast?.slice(0, 6).map(
               (character, i) =>
                 character.profile_path && (
                   <Grid2
                     key={i}
-                    item
+                    item="true"
                     xs={4}
                     md={2}
                     component={Link}
@@ -158,10 +156,16 @@ const MovieInformation = () => {
                       src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
                       alt={character.name}
                     />
-                    <Typography color="textPrimary">
+                    <Typography
+                      color="textPrimary"
+                      className={classes.castName}
+                    >
                       {character?.name}
                     </Typography>
-                    <Typography color="textSecondary">
+                    <Typography
+                      color="textSecondary"
+                      className={classes.characterName}
+                    >
                       {character.character.split('/')[0]}
                     </Typography>
                   </Grid2>
@@ -170,9 +174,14 @@ const MovieInformation = () => {
         </Grid2>
 
         {/* buttons */}
-        <Grid2 item container style={{ marginTop: '2rem' }}>
+        <Grid2 item="true" container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
-            <Grid2 item xs={12} sm={6} className={classes.buttonsContainer}>
+            <Grid2
+              item="true"
+              xs={12}
+              sm={6}
+              className={classes.buttonsContainer}
+            >
               <ButtonGroup size="medium" variant="outlined">
                 <Button
                   target="_blank"
@@ -190,12 +199,21 @@ const MovieInformation = () => {
                 >
                   IMDB
                 </Button>
-                <Button href={`#`} endIcon={<Theaters />} onClick={() => {}}>
+                <Button
+                  href={`#`}
+                  endIcon={<Theaters />}
+                  onClick={() => setOpen(true)}
+                >
                   Trailer
                 </Button>
               </ButtonGroup>
             </Grid2>
-            <Grid2 item xs={12} sm={6} className={classes.buttonsContainer}>
+            <Grid2
+              item="true"
+              xs={12}
+              sm={6}
+              className={classes.buttonsContainer}
+            >
               <ButtonGroup size="medium" variant="outlined">
                 <Button
                   onClick={addToFavourites}
@@ -229,7 +247,6 @@ const MovieInformation = () => {
           </div>
         </Grid2>
       </Grid2>
-
       {/* recommended movies */}
       <Box marginTop="5rem" width="100%">
         <Typography variant="h3" gutterBottom align="center">
@@ -241,6 +258,23 @@ const MovieInformation = () => {
           <Box>There are no recommendations</Box>
         )}
       </Box>
+      <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {data?.videos?.results?.length > 0 && (
+          <iframe
+            autoPlay
+            className={classes.video}
+            style={{ border: 'none' }}
+            title="Trailer"
+            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
+            allow="autoplay"
+          />
+        )}
+      </Modal>
     </Grid2>
   );
 };

@@ -51,12 +51,39 @@ export default makeStyles((theme) => ({
     objectFit: 'cover',
     borderRadius: '10px',
   },
+  castName: {
+    overflow: 'hidden !important',
+    textOverflow: 'ellipsis !important',
+    whiteSpace: 'nowrap !important',
+    display: 'block',
+    maxWidth: '7em', // Обрезка по ширине
+  },
+  characterName: {
+    overflow: 'hidden !important',
+    textOverflow: 'ellipsis !important',
+    whiteSpace: 'nowrap !important',
+    display: 'block',
+    maxWidth: '7em', // Обрезка по ширине
+  },
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
+    },
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  video: {
+    width: '50%',
+    height: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '90%',
+      height: '90%',
     },
   },
 }));
